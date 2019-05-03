@@ -48,6 +48,24 @@ def sentiment_analysis():
 
         url_tweets = urllib.urlopen("http://127.0.0.1:8083/api/v1/tweets?t=" + title)
 
+
+
+        json_t = url_tweets.read()
+        # Se convierte en un JSON la respuesta leída
+        omdbt = json.loads(json_t)
+
+        print('Jorge ', type(omdbt))
+
+        #print ('S ', omdbt[0]['text'].encode())
+
+        tweetsF = []
+
+        for omt in omdbt:
+            print(omt['text'].encode('ascii','ignore'))
+            tweetsF.append(omt['text'].encode('ascii','ignore'))
+
+        #print ('S ',omdbt[0]['text'])
+        '''
         print type(url_tweets)
 
         print dir(url_tweets)
@@ -62,6 +80,9 @@ def sentiment_analysis():
         print url_tweets.read()
 
         urllib.urlopen("http://127.0.0.1:8082/api/v1/sentimentAnalysis?t=" + str(tweets))
+        '''
+
+        urllib.urlopen("http://127.0.0.1:8082/api/v1/sentimentAnalysis?t=" + str(tweetsF))
 
         # Se lee la respuesta de OMDB
         json_omdb = url_omdb.read()

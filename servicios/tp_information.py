@@ -33,12 +33,13 @@ class TextProcessingClient(object):
     def analisis_sentimientos(self,tweets):
         pos, neutral, neg = 0, 0, 0
         for tweet in tweets:
-            print(type(tweet))
+            print(tweet)
             result = self.analizar_tweet(tweet)
 
+            '''
             if not result.body:
                 return [0,0,0]
-
+            '''
 
             output = StringIO.StringIO()
 
@@ -52,16 +53,18 @@ class TextProcessingClient(object):
             fa=open("output","rb")
             resultado = pickle.load(fa)
             fa.close()
-            print('>>>>>>>>>>>>>>>', resultado.body)
+            #print('>>>>>>>>>>>>>>>', resultado.body)
             feeling = resultado.body['label']
 
+            print("feel ",feeling.encode())
+
             #feeling = json.dumps(result)['label']
-            print(feeling)
-            if feeling is "pos":
+            print(feeling.encode())
+            if feeling.encode() is 'pos':
                pos+=1
-            if feeling is "neutral":
+            if feeling.encode() is 'neutral':
                neutral+=1
-            if feeling is "neg":
+            if feeling.encode() == 'neg':
                neg+=1
 
         print("positivo:",pos)
@@ -78,7 +81,7 @@ def main():
     # creating object of TwitterClient Class 
     api = TextProcessingClient() 
     # calling function to get tweets 
-    tweets = request.args.get("t")
+    tweets = [request.args.get("t")]
     return api.analisis_sentimientos(tweets)
     
 

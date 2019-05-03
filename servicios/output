@@ -12,126 +12,139 @@ Rp4
 (dp5
 S'_code'
 p6
-I400
+I200
 sS'_body'
 p7
-S'Form Validation Errors\ntext: This field is required.\n'
-p8
-sS'_headers'
+(dp8
+Vprobability
 p9
+(dp10
+Vneg
+p11
+F0.5023050546678582
+sVneutral
+p12
+F0.795654120555624
+sVpos
+p13
+F0.4976949453321417
+ssVlabel
+p14
+Vneutral
+p15
+ssS'_headers'
+p16
 (ihttplib
 HTTPMessage
-p10
-(dp11
-S'fp'
-p12
-NsS'status'
-p13
-S''
-p14
-sS'startofbody'
-p15
-NsS'startofheaders'
-p16
-NsS'subtype'
 p17
-S'html'
-p18
-sS'type'
+(dp18
+S'fp'
 p19
-S'text/html'
+NsS'status'
 p20
-sS'maintype'
+S''
 p21
-S'text'
+sS'startofbody'
 p22
-sS'headers'
+NsS'startofheaders'
 p23
-(lp24
-S'Content-Type: text/html; charset=utf-8\r\n'
+NsS'subtype'
+p24
+S'json'
 p25
-aS'Date: Wed, 01 May 2019 22:49:48 GMT\r\n'
+sS'type'
 p26
-aS'ETag: "a5c1e36c45cfbda1a6fd4e65eec310f6"\r\n'
+S'application/json'
 p27
-aS'Server: RapidAPI-1.0.16\r\n'
+sS'maintype'
 p28
-aS'X-RapidAPI-Region: AWS - us-east-1\r\n'
+S'application'
 p29
-aS'X-RapidAPI-Version: 1.0.16\r\n'
+sS'headers'
 p30
-aS'X-RateLimit-queries-Limit: 45000\r\n'
-p31
-aS'X-RateLimit-queries-Remaining: 44817\r\n'
+(lp31
+S'Content-Type: application/json\r\n'
 p32
-aS'Content-Length: 53\r\n'
+aS'Date: Fri, 03 May 2019 18:45:37 GMT\r\n'
 p33
-aS'Connection: Close\r\n'
+aS'ETag: "35733fbe98c6cb63fbb4ac8ec32ac018"\r\n'
 p34
-asS'dict'
+aS'Server: RapidAPI-1.0.16\r\n'
 p35
-(dp36
-S'x-ratelimit-queries-limit'
+aS'X-RapidAPI-Region: AWS - us-east-1\r\n'
+p36
+aS'X-RapidAPI-Version: 1.0.16\r\n'
 p37
-S'45000'
+aS'X-RateLimit-queries-Limit: 45000\r\n'
 p38
-sS'x-rapidapi-version'
+aS'X-RateLimit-queries-Remaining: 44795\r\n'
 p39
-S'1.0.16'
+aS'Content-Length: 124\r\n'
 p40
-sS'x-ratelimit-queries-remaining'
+aS'Connection: Close\r\n'
 p41
-S'44817'
+asS'dict'
 p42
-sS'content-length'
-p43
-S'53'
+(dp43
+S'x-ratelimit-queries-limit'
 p44
-sS'server'
+S'45000'
 p45
-S'RapidAPI-1.0.16'
+sS'x-rapidapi-version'
 p46
-sS'x-rapidapi-region'
+S'1.0.16'
 p47
-S'AWS - us-east-1'
+sS'x-ratelimit-queries-remaining'
 p48
-sS'connection'
+S'44795'
 p49
-S'Close'
+sS'content-length'
 p50
-sS'etag'
+S'124'
 p51
-S'"a5c1e36c45cfbda1a6fd4e65eec310f6"'
+sS'server'
 p52
-sS'date'
+S'RapidAPI-1.0.16'
 p53
-S'Wed, 01 May 2019 22:49:48 GMT'
+sS'x-rapidapi-region'
 p54
-sS'content-type'
+S'AWS - us-east-1'
 p55
-S'text/html; charset=utf-8'
+sS'connection'
 p56
-ssS'typeheader'
+S'Close'
 p57
-g56
-sS'encodingheader'
+sS'etag'
 p58
-NsS'seekable'
+S'"35733fbe98c6cb63fbb4ac8ec32ac018"'
 p59
+sS'date'
+p60
+S'Fri, 03 May 2019 18:45:37 GMT'
+p61
+sS'content-type'
+p62
+S'application/json'
+p63
+ssS'typeheader'
+p64
+g63
+sS'encodingheader'
+p65
+NsS'seekable'
+p66
 I0
 sS'unixfrom'
-p60
-g14
+p67
+g21
 sS'plisttext'
-p61
-S'; charset=utf-8'
-p62
+p68
+g21
 sS'plist'
-p63
-(lp64
-S'charset=utf-8'
-p65
-asbsS'_raw_body'
-p66
-g8
+p69
+(lp70
+sbsS'_raw_body'
+p71
+S'{"probability": {"neg": 0.50230505466785824, "neutral": 0.79565412055562401, "pos": 0.4976949453321417}, "label": "neutral"}'
+p72
 sb.

@@ -35,86 +35,67 @@ import os
 from flask import Flask, abort, render_template, request
 import urllib, json
 
-app = Flask(__name__) 
+app = Flask(__name__)
 
-class TwitterClient(object): 
-    ''' 
-    Generic Twitter Class for sentiment analysis. 
-    '''
-    def __init__(self): 
-        ''' 
-        Class constructor or initialization method. 
-        '''
-        # keys and tokens from the Twitter Dev Console 
-        consumer_key = 'Y0zvODDHvri9l52c3mQ3RwgZw'
-        consumer_secret = 'TFqMqv1oXMFAnJ8mNRxntLktUfOlhNFGhzp1qZuladORJckasP'
-        access_token = '2354059560-d45ZqnMCKogB9tcPcIfT2joxaxNg4r660akwRpj'
-        access_token_secret = 'Ib6l84atlADRPOBn9iTitxPeF0tejuH1h4KHO9KO41DFo'
-
-        # attempt authentication 
-        try: 
-            # create OAuthHandler object 
-            self.auth = OAuthHandler(consumer_key, consumer_secret) 
-            # set access token and secret 
-            self.auth.set_access_token(access_token, access_token_secret) 
-            # create tweepy API object to fetch tweets 
-            self.api = tweepy.API(self.auth) 
-        except: 
-            print("Error: Authentication Failed") 
-
-    def clean_tweet(self, tweet): 
-        ''' 
-        Utility function to clean tweet text by removing links, special characters 
-        using simple regex statements. 
-        '''
-        return ' '.join(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)", " ", tweet).split()) 
-
-    def get_tweets(self, query, count = 10): 
-        ''' 
-        Main function to fetch tweets and parse them. 
-        '''
-        # empty list to store parsed tweets 
-        tweets = [] 
-
-        try: 
-            # call twitter api to fetch tweets 
-            fetched_tweets = self.api.search(q = query, count = count) 
-
-            # parsing tweets one by one 
-            for tweet in fetched_tweets: 
-                # empty dictionary to store required params of a tweet 
-                parsed_tweet = {} 
-
-                # saving text of tweet 
-                parsed_tweet['text'] = tweet.text 
-                # saving sentiment of tweet 
-                # parsed_tweet['sentiment'] = self.get_tweet_sentiment(tweet.text) 
-
-                # appending parsed tweet to tweets list 
-                if tweet.retweet_count > 0: 
-                    # if tweet has retweets, ensure that it is appended only once 
-                    if parsed_tweet not in tweets: 
-                        tweets.append(parsed_tweet) 
-                else: 
-                    tweets.append(parsed_tweet) 
-
-            # return parsed tweets 
-            return tweets 
-
-        except tweepy.TweepError as e: 
-            # print error (if any) 
-            print("Error : " + str(e)) 
 
 @app.route("/api/v1/tweets")
-def main(): 
-    # creating object of TwitterClient Class 
-    api = TwitterClient()
-    title = request.args.get("t") 
-    # calling function to get tweets 
-    # tweets = api.get_tweets(query = 'Avengers', count = 100)
-    tweets = api.get_tweets(query = title, count = 3)
-    # print(tweets)
-    return tweets, 200 
+def get_tweets():
+    # keys and tokens from the Twitter Dev Console
+    consumer_key = 'Y0zvODDHvri9l52c3mQ3RwgZw'
+    consumer_secret = 'TFqMqv1oXMFAnJ8mNRxntLktUfOlhNFGhzp1qZuladORJckasP'
+    access_token = '2354059560-d45ZqnMCKogB9tcPcIfT2joxaxNg4r660akwRpj'
+    access_token_secret = 'Ib6l84atlADRPOBn9iTitxPeF0tejuH1h4KHO9KO41DFo'
+
+    # attempt authentication
+    try:
+        # create OAuthHandler object
+        auth = OAuthHandler(consumer_key, consumer_secret)
+        # set access token and secret
+        auth.set_access_token(access_token, access_token_secret)
+        # create tweepy API object to fetch tweets
+        api = tweepy.API(auth)
+    except:
+        print("Error: Authentication Failed")
+
+    title = request.args.get("t")
+    tweets = []
+    try:
+        # call twitter api to fetch tweets
+        fetched_tweets = api.search(q=title, c=100)
+
+        print (type(fetched_tweets))
+
+
+        # parsing tweets one by one
+
+        for tweet in fetched_tweets:
+            # empty dictionary to store required params of a tweet
+            parsed_tweet = {}
+
+            # saving text of tweet
+            #parsed_tweet['text'] = tweet.text
+
+            parsed_tweet['text'] = ' '.join(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t]) | (\w +:\ / \ / \S +)", " ", tweet.text).split())
+
+            # saving sentiment of tweet
+            # parsed_tweet['sentiment'] = self.get_tweet_sentiment(tweet.text)
+
+            # appending parsed tweet to tweets list
+            if tweet.retweet_count > 0:
+                # if tweet has retweets, ensure that it is appended only once
+                if parsed_tweet not in tweets:
+                    tweets.append(parsed_tweet)
+            else:
+                tweets.append(parsed_tweet)
+
+                # return parsed tweets
+    except tweepy.TweepError as e:
+        # print error (if any)
+        print("Error : " + str(e))
+
+    print('Hola',json.dumps(tweets))
+
+    return json.dumps(tweets), 200
 
 
 if __name__ == '__main__':
