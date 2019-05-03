@@ -40,16 +40,11 @@ class TextProcessingClient(object):
             if not result.body:
                 return [0,0,0]
             '''
-
             output = StringIO.StringIO()
-
             f = open("output","wb")
             pickle.dump(result, f)
-
             f.close()
-
             del (f)
-
             fa=open("output","rb")
             resultado = pickle.load(fa)
             fa.close()
@@ -81,14 +76,18 @@ def main():
     # creating object of TwitterClient Class 
     api = TextProcessingClient() 
     # calling function to get tweets 
-    tweets = [request.args.get("t")]
+    #tweets = [request.args.get("t")]
+    print('Hoooooola')
+
+    tweets = [request.data]
+
+    print ('len ',tweets.__sizeof__())
+    print ('ttttt   ', tweets)
     return api.analisis_sentimientos(tweets)
     
 
 if __name__ == "__main__":
     port = int(os.environ.get('PORT',8082))
-
     app.debug = True
-
     app.run(host='0.0.0.0', port=port) 
 

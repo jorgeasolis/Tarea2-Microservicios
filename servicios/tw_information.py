@@ -74,11 +74,7 @@ def get_tweets():
 
             # saving text of tweet
             #parsed_tweet['text'] = tweet.text
-
             parsed_tweet['text'] = ' '.join(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t]) | (\w +:\ / \ / \S +)", " ", tweet.text).split())
-
-            # saving sentiment of tweet
-            # parsed_tweet['sentiment'] = self.get_tweet_sentiment(tweet.text)
 
             # appending parsed tweet to tweets list
             if tweet.retweet_count > 0:
@@ -88,7 +84,6 @@ def get_tweets():
             else:
                 tweets.append(parsed_tweet)
 
-                # return parsed tweets
     except tweepy.TweepError as e:
         # print error (if any)
         print("Error : " + str(e))
@@ -105,6 +100,3 @@ if __name__ == '__main__':
     app.debug = True
     # Se ejecuta el servicio definiendo el host '0.0.0.0' para que se pueda acceder desde cualquier IP
     app.run(host='0.0.0.0', port=port)
-
-     # calling main function 
-     # main() 

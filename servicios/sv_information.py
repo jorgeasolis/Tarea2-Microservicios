@@ -53,7 +53,6 @@ def get_information():
     # Se regresa el JSON de la respuesta
     return json.dumps(omdb), 200
 
-
 if __name__ == '__main__':
     # Se define el puerto del sistema operativo que utilizará el servicio
     port = int(os.environ.get('PORT', 8084))

@@ -25,7 +25,7 @@
 import os
 from flask import Flask, render_template, request
 import urllib, json
-import requests
+import requests, httplib
 
 app = Flask(__name__)
 
@@ -48,8 +48,6 @@ def sentiment_analysis():
 
         url_tweets = urllib.urlopen("http://127.0.0.1:8083/api/v1/tweets?t=" + title)
 
-
-
         json_t = url_tweets.read()
         # Se convierte en un JSON la respuesta leída
         omdbt = json.loads(json_t)
@@ -67,9 +65,7 @@ def sentiment_analysis():
         #print ('S ',omdbt[0]['text'])
         '''
         print type(url_tweets)
-
         print dir(url_tweets)
-
         tweets = []
         for tweet in url_tweets:
             print type(tweet)
@@ -78,11 +74,18 @@ def sentiment_analysis():
             print tweet
             tweets.append(tweet)
         print url_tweets.read()
-
         urllib.urlopen("http://127.0.0.1:8082/api/v1/sentimentAnalysis?t=" + str(tweets))
         '''
 
-        urllib.urlopen("http://127.0.0.1:8082/api/v1/sentimentAnalysis?t=" + str(tweetsF))
+        '''
+        http = httplib.HTTP()
+        http.connect(host='127.0.0.1', port='8082')
+        http.putrequest('POST','/api/v1/sentimentAnalysis')
+        http.send(str(tweetsF))
+        http.close()
+        '''
+
+        #urllib.urlopen("http://127.0.0.1:8082/api/v1/sentimentAnalysis?t=" + str(tweetsF))
 
         # Se lee la respuesta de OMDB
         json_omdb = url_omdb.read()
