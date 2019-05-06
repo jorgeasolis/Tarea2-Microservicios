@@ -74,7 +74,7 @@ def main():
     api = TextProcessingClient()
     # calling function to get tweets
     # tweets = []
-    tweets = request.args.get("t")
+    tweets = request.args.get("tweets")
     # print ('len ts', len(tweets))
     # print ('tweets ', tweets)
     # print('Hoooooola')

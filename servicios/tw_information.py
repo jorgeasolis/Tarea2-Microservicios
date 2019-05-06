@@ -57,12 +57,12 @@ def get_tweets():
     except:
         print("Error: Authentication Failed")
 
-    title = request.args.get("t")
+    title = request.args.get("title")
     tweets = []
 
     query = {'q': title,
              'result_type': 'recent',
-             'count': 100,
+             'count': 200,
              }
 
     try:

@@ -21,13 +21,13 @@ p9
 (dp10
 Vneg
 p11
-F0.45918949727339653
+F0.5785078311768377
 sVneutral
 p12
-F0.5567381958286775
+F0.6861619027887219
 sVpos
 p13
-F0.5408105027266035
+F0.42149216882316226
 ssVlabel
 p14
 Vneutral
@@ -65,9 +65,9 @@ p30
 (lp31
 S'Content-Type: application/json\r\n'
 p32
-aS'Date: Mon, 06 May 2019 13:54:08 GMT\r\n'
+aS'Date: Mon, 06 May 2019 21:45:15 GMT\r\n'
 p33
-aS'ETag: "ce79fc0e9d8b14a74b9bda7de16896f4"\r\n'
+aS'ETag: "00ad24fef3856481407147e3c5a6cd9f"\r\n'
 p34
 aS'Server: RapidAPI-1.0.16\r\n'
 p35
@@ -77,7 +77,7 @@ aS'X-RapidAPI-Version: 1.0.16\r\n'
 p37
 aS'X-RateLimit-queries-Limit: 45000\r\n'
 p38
-aS'X-RateLimit-queries-Remaining: 44628\r\n'
+aS'X-RateLimit-queries-Remaining: 44445\r\n'
 p39
 aS'Content-Length: 125\r\n'
 p40
@@ -96,7 +96,7 @@ S'1.0.16'
 p47
 sS'x-ratelimit-queries-remaining'
 p48
-S'44628'
+S'44445'
 p49
 sS'content-length'
 p50
@@ -116,11 +116,11 @@ S'Close'
 p57
 sS'etag'
 p58
-S'"ce79fc0e9d8b14a74b9bda7de16896f4"'
+S'"00ad24fef3856481407147e3c5a6cd9f"'
 p59
 sS'date'
 p60
-S'Mon, 06 May 2019 13:54:08 GMT'
+S'Mon, 06 May 2019 21:45:15 GMT'
 p61
 sS'content-type'
 p62
@@ -145,6 +145,6 @@ p69
 (lp70
 sbsS'_raw_body'
 p71
-S'{"probability": {"neg": 0.45918949727339653, "neutral": 0.55673819582867745, "pos": 0.54081050272660347}, "label": "neutral"}'
+S'{"probability": {"neg": 0.57850783117683768, "neutral": 0.68616190278872191, "pos": 0.42149216882316226}, "label": "neutral"}'
 p72
 sb.

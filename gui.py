@@ -48,13 +48,13 @@ def sentiment_analysis():
         print('type o: ', type(url_omdb))
         print('url: ', url_omdb)
 
-        url_tweets = urllib.urlopen("http://127.0.0.1:8083/api/v1/tweets?t=" + title)
+        url_tweets = urllib.urlopen("http://127.0.0.1:8083/api/v1/tweets?title=" + title)
 
         json_t = url_tweets.read()
         # Se convierte en un JSON la respuesta leída
         omdbt = json.loads(json_t)
 
-        #print('Jorge ', type(omdbt))
+        print('Jorge ', omdbt)
         #print('len omdbt ', len(omdbt))
 
         #print ('S ', omdbt[0]['text'].encode())
@@ -95,7 +95,7 @@ def sentiment_analysis():
         http.send(str(tweetsF))
         http.close()
         '''
-        url_senti = urllib.urlopen("http://127.0.0.1:8082/api/v1/sentimentAnalysis?t=" + str(tweetsC))
+        url_senti = urllib.urlopen("http://127.0.0.1:8082/api/v1/sentimentAnalysis?tweets=" + str(tweetsC))
         #urllib.urlopen("http://127.0.0.1:8082/api/v1/sentimentAnalysis?t=" + str(tweetsF))
         print('type s: ', type(url_senti))
         print('s: ', url_senti)
@@ -115,7 +115,12 @@ def sentiment_analysis():
         # Se convierte en un JSON la respuesta leída
         omdb = json.loads(json_omdb)
         # Se llena el JSON que se enviará a la interfaz gráfica para mostrársela al usuario
-        print('o: ', omdb)
+        #print('o: ', omdb)
+
+        print('Jorge 2', omdb)
+        print('Jorge ', sentiment)
+
+
         json_result = {'omdb': omdb, 'sentiment':sentiment}
         # Se regresa el template de la interfaz gráfica predefinido así como los datos que deberá cargar
         return render_template("status.html", result=json_result)
