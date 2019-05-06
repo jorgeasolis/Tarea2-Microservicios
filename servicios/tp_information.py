@@ -63,8 +63,8 @@ class TextProcessingClient(object):
         print("neutral:", neutral)
         print("negativo:", neg)
 
-        res = [pos, neutral, neg, pos + neutral + neg]
-
+        res = {'positive': pos, 'neutral': neutral, 'negative': neg, 'total': pos+neg+neutral}
+        #res = [pos, neutral, neg, pos + neutral + neg]
         return res
 
 
@@ -93,7 +93,7 @@ def main():
     '''
 
     # return api.analisis_sentimientos(tweets)
-    return str(api.analisis_sentimientos(t1)), 200
+    return json.dumps(api.analisis_sentimientos(t1)), 200
 
 
 if __name__ == "__main__":

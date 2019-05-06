@@ -21,13 +21,13 @@ p9
 (dp10
 Vneg
 p11
-F0.5023050546678582
+F0.45918949727339653
 sVneutral
 p12
-F0.795654120555624
+F0.5567381958286775
 sVpos
 p13
-F0.4976949453321417
+F0.5408105027266035
 ssVlabel
 p14
 Vneutral
@@ -65,21 +65,21 @@ p30
 (lp31
 S'Content-Type: application/json\r\n'
 p32
-aS'Date: Fri, 03 May 2019 18:45:37 GMT\r\n'
+aS'Date: Mon, 06 May 2019 13:54:08 GMT\r\n'
 p33
-aS'ETag: "35733fbe98c6cb63fbb4ac8ec32ac018"\r\n'
+aS'ETag: "ce79fc0e9d8b14a74b9bda7de16896f4"\r\n'
 p34
 aS'Server: RapidAPI-1.0.16\r\n'
 p35
-aS'X-RapidAPI-Region: AWS - us-east-1\r\n'
+aS'X-RapidAPI-Region: AWS - us-west-2\r\n'
 p36
 aS'X-RapidAPI-Version: 1.0.16\r\n'
 p37
 aS'X-RateLimit-queries-Limit: 45000\r\n'
 p38
-aS'X-RateLimit-queries-Remaining: 44795\r\n'
+aS'X-RateLimit-queries-Remaining: 44628\r\n'
 p39
-aS'Content-Length: 124\r\n'
+aS'Content-Length: 125\r\n'
 p40
 aS'Connection: Close\r\n'
 p41
@@ -96,11 +96,11 @@ S'1.0.16'
 p47
 sS'x-ratelimit-queries-remaining'
 p48
-S'44795'
+S'44628'
 p49
 sS'content-length'
 p50
-S'124'
+S'125'
 p51
 sS'server'
 p52
@@ -108,7 +108,7 @@ S'RapidAPI-1.0.16'
 p53
 sS'x-rapidapi-region'
 p54
-S'AWS - us-east-1'
+S'AWS - us-west-2'
 p55
 sS'connection'
 p56
@@ -116,11 +116,11 @@ S'Close'
 p57
 sS'etag'
 p58
-S'"35733fbe98c6cb63fbb4ac8ec32ac018"'
+S'"ce79fc0e9d8b14a74b9bda7de16896f4"'
 p59
 sS'date'
 p60
-S'Fri, 03 May 2019 18:45:37 GMT'
+S'Mon, 06 May 2019 13:54:08 GMT'
 p61
 sS'content-type'
 p62
@@ -145,6 +145,6 @@ p69
 (lp70
 sbsS'_raw_body'
 p71
-S'{"probability": {"neg": 0.50230505466785824, "neutral": 0.79565412055562401, "pos": 0.4976949453321417}, "label": "neutral"}'
+S'{"probability": {"neg": 0.45918949727339653, "neutral": 0.55673819582867745, "pos": 0.54081050272660347}, "label": "neutral"}'
 p72
 sb.

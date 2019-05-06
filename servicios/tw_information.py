@@ -61,8 +61,8 @@ def get_tweets():
     tweets = []
 
     query = {'q': title,
-             'result_type': 'mixed',
-             'count': 30,
+             'result_type': 'recent',
+             'count': 100,
              }
 
     try:

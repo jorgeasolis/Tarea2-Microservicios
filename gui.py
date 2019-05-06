@@ -45,6 +45,8 @@ def sentiment_analysis():
         url_omdb = urllib.urlopen("http://127.0.0.1:8084/api/v1/information?t=" + title)
         # La siguiente url es para un servicio en la nube, pregunta al instructor(a) si el servicio está activo
         # url_omdb = urllib.urlopen("https://uaz.cloud.tyk.io/content/api/v1/information?t=" + title)
+        print('type o: ', type(url_omdb))
+        print('url: ', url_omdb)
 
         url_tweets = urllib.urlopen("http://127.0.0.1:8083/api/v1/tweets?t=" + title)
 
@@ -70,7 +72,7 @@ def sentiment_analysis():
             #tweetsF.append(omt['text'].encode('ascii','ignore'))
         #print ('tweetsC len ', len(tweetsC))
         #print ('S ',omdbt[0]['text'])
-        print ('tweetsC ', tweetsC)
+        #print ('tweetsC ', tweetsC)
         tweetsC = tweetsC.replace('#', '')
         '''
         print type(url_tweets)
@@ -95,15 +97,25 @@ def sentiment_analysis():
         '''
         url_senti = urllib.urlopen("http://127.0.0.1:8082/api/v1/sentimentAnalysis?t=" + str(tweetsC))
         #urllib.urlopen("http://127.0.0.1:8082/api/v1/sentimentAnalysis?t=" + str(tweetsF))
+        print('type s: ', type(url_senti))
+        print('s: ', url_senti)
+
         json_senti = url_senti.read()
         # Se convierte en un JSON la respuesta leída
+
+        print('type js: ', type(json_senti))
+        print('js: ', json_senti)
+
         sentiment = json.loads(json_senti)
+
+        #print ('sent: ',sentiment)
 
         # Se lee la respuesta de OMDB
         json_omdb = url_omdb.read()
         # Se convierte en un JSON la respuesta leída
         omdb = json.loads(json_omdb)
         # Se llena el JSON que se enviará a la interfaz gráfica para mostrársela al usuario
+        print('o: ', omdb)
         json_result = {'omdb': omdb, 'sentiment':sentiment}
         # Se regresa el template de la interfaz gráfica predefinido así como los datos que deberá cargar
         return render_template("status.html", result=json_result)

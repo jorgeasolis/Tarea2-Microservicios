@@ -83,6 +83,31 @@
 </div>
 <!-- /.container -->
 
+<!-- sentiment -->
+
+<section id="sentiment" class="about">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h4>Sentiment Analysis</h4>
+                <p class="lead">
+                    <h3><strong>Positive: </strong>  {{ result.sentiment['positive'] }} / {{ result.sentiment['total'] }}</h3>
+                </p>
+                <p class="lead">
+                    <h3><strong>Neutral: </strong>  {{ result.sentiment['neutral'] }} / {{ result.sentiment['total'] }}</h3>
+                </p>
+                <p class="lead">
+                    <h3><strong>Negative: </strong> {{ result.sentiment['negative'] }} / {{ result.sentiment['total'] }} </h3>
+                </p>
+            </div>
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container -->
+</section>
+
+<!-- /.sentiment -->
+
 <!-- About -->
 <section id="about" class="about">
     <div class="container">
