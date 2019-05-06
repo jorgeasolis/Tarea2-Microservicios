@@ -59,15 +59,21 @@ def get_tweets():
 
     title = request.args.get("t")
     tweets = []
+
+    query = {'q': title,
+             'result_type': 'mixed',
+             'count': 30,
+             }
+
     try:
         # call twitter api to fetch tweets
-        fetched_tweets = api.search(q=title, c=100)
+        #fetched_tweets = api.search(q=title, c=20)
+        fetched_tweets = api.search(**query)
 
         print (type(fetched_tweets))
-
+        print ('len fetched ', len(fetched_tweets))
 
         # parsing tweets one by one
-
         for tweet in fetched_tweets:
             # empty dictionary to store required params of a tweet
             parsed_tweet = {}
@@ -77,12 +83,16 @@ def get_tweets():
             parsed_tweet['text'] = ' '.join(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t]) | (\w +:\ / \ / \S +)", " ", tweet.text).split())
 
             # appending parsed tweet to tweets list
+            '''
             if tweet.retweet_count > 0:
                 # if tweet has retweets, ensure that it is appended only once
                 if parsed_tweet not in tweets:
                     tweets.append(parsed_tweet)
             else:
                 tweets.append(parsed_tweet)
+            '''
+            tweets.append(parsed_tweet)
+        print ('len tweets ', len(tweets))
 
     except tweepy.TweepError as e:
         # print error (if any)

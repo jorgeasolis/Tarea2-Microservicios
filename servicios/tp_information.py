@@ -1,93 +1,103 @@
-import unirest 
+import unirest
 
 import os
 from flask import Flask, abort, render_template, request
 import urllib, json, StringIO, pickle
 
-app = Flask(__name__) 
+app = Flask(__name__)
 
-class TextProcessingClient(object): 
+
+class TextProcessingClient(object):
     ''' 
     Generic Twitter Class for sentiment analysis. 
     '''
-    def __init__(self): 
+
+    def __init__(self):
         ''' 
         Class constructor or initialization method. 
         '''
         # keys and tokens from the Twitter Dev Console
-        
 
-    def analizar_tweet(self,texto):
-        response = unirest.post("https://japerk-text-processing.p.rapidapi.com/sentiment/",headers={
-                "X-RapidAPI-Host": "japerk-text-processing.p.rapidapi.com",
-                "X-RapidAPI-Key": "0e652fba64msh27159e87470ff74p17f883jsn28d9111704f1",
-                "Content-Type": "application/x-www-form-urlencoded"
-            },
-            params={
-                "text": texto
-            }
-        )
+    def analizar_tweet(self, texto):
+        response = unirest.post("https://japerk-text-processing.p.rapidapi.com/sentiment/", headers={
+            "X-RapidAPI-Host": "japerk-text-processing.p.rapidapi.com",
+            "X-RapidAPI-Key": "0e652fba64msh27159e87470ff74p17f883jsn28d9111704f1",
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+                                params={
+                                    "text": texto
+                                }
+                                )
         return response
         # print(response.body)
 
-    def analisis_sentimientos(self,tweets):
+    def analisis_sentimientos(self, tweets):
         pos, neutral, neg = 0, 0, 0
         for tweet in tweets:
-            print(tweet)
-            result = self.analizar_tweet(tweet)
+            if len(tweet) > 1:
+                print ('tweet ', tweet)
+                result = self.analizar_tweet(tweet)
 
-            '''
-            if not result.body:
-                return [0,0,0]
-            '''
-            output = StringIO.StringIO()
-            f = open("output","wb")
-            pickle.dump(result, f)
-            f.close()
-            del (f)
-            fa=open("output","rb")
-            resultado = pickle.load(fa)
-            fa.close()
-            #print('>>>>>>>>>>>>>>>', resultado.body)
-            feeling = resultado.body['label']
+                output = StringIO.StringIO()
+                f = open("output", "wb")
+                pickle.dump(result, f)
+                f.close()
+                del (f)
+                fa = open("output", "rb")
+                resultado = pickle.load(fa)
+                fa.close()
 
-            print("feel ",feeling.encode())
+                feeling = resultado.body['label']
 
-            #feeling = json.dumps(result)['label']
-            print(feeling.encode())
-            if feeling.encode() is 'pos':
-               pos+=1
-            if feeling.encode() is 'neutral':
-               neutral+=1
-            if feeling.encode() == 'neg':
-               neg+=1
+                # feeling = json.dumps(result)['label']
 
-        print("positivo:",pos)
-        print("neutral:",neutral)
-        print("negativo:",neg)
+                print('feel:', feeling.encode())
+                if feeling.encode() == 'pos':
+                    pos += 1
+                if feeling.encode() == 'neutral':
+                    neutral += 1
+                if feeling.encode() == 'neg':
+                    neg += 1
 
-        res = [pos, neutral, neg]
+        print("positivo:", pos)
+        print("neutral:", neutral)
+        print("negativo:", neg)
+
+        res = [pos, neutral, neg, pos + neutral + neg]
 
         return res
 
 
 @app.route("/api/v1/sentimentAnalysis")
-def main(): 
-    # creating object of TwitterClient Class 
-    api = TextProcessingClient() 
-    # calling function to get tweets 
-    #tweets = [request.args.get("t")]
-    print('Hoooooola')
+def main():
+    # creating object of TwitterClient Class
+    api = TextProcessingClient()
+    # calling function to get tweets
+    # tweets = []
+    tweets = request.args.get("t")
+    # print ('len ts', len(tweets))
+    # print ('tweets ', tweets)
+    # print('Hoooooola')
 
-    tweets = [request.data]
+    # tweets = [request.data]
 
-    print ('len ',tweets.__sizeof__())
-    print ('ttttt   ', tweets)
-    return api.analisis_sentimientos(tweets)
-    
+    tt = tweets.encode().replace('[', '')
+
+    t1 = []
+    t1 = tt.split(';')
+    # print ('len ', len(t1))
+    '''
+    print ('len ', len(tweets.encode()))
+    print ('ttttt   ', type(tweets.encode()))
+    print ('ooo   ', tweets.encode())
+    '''
+
+    # return api.analisis_sentimientos(tweets)
+    return str(api.analisis_sentimientos(t1)), 200
+
 
 if __name__ == "__main__":
-    port = int(os.environ.get('PORT',8082))
+    port = int(os.environ.get('PORT', 8082))
     app.debug = True
     app.run(host='0.0.0.0', port=port) 
 

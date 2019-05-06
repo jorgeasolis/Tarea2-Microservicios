@@ -52,17 +52,26 @@ def sentiment_analysis():
         # Se convierte en un JSON la respuesta leída
         omdbt = json.loads(json_t)
 
-        print('Jorge ', type(omdbt))
+        #print('Jorge ', type(omdbt))
+        #print('len omdbt ', len(omdbt))
 
         #print ('S ', omdbt[0]['text'].encode())
-
-        tweetsF = []
+        tweetsC = ''
+        i = 0
 
         for omt in omdbt:
-            print(omt['text'].encode('ascii','ignore'))
-            tweetsF.append(omt['text'].encode('ascii','ignore'))
+            if i == 0:
+            #print(omt['text'].encode('ascii','ignore'))
+                tweetsC += omt['text'].encode('ascii', 'ignore').encode('utf8', 'ignore')
+                i += 1
+            else:
+                tweetsC += ';' + omt['text'].encode('ascii', 'ignore').encode('utf8', 'ignore')
 
+            #tweetsF.append(omt['text'].encode('ascii','ignore'))
+        #print ('tweetsC len ', len(tweetsC))
         #print ('S ',omdbt[0]['text'])
+        print ('tweetsC ', tweetsC)
+        tweetsC = tweetsC.replace('#', '')
         '''
         print type(url_tweets)
         print dir(url_tweets)
@@ -84,15 +93,18 @@ def sentiment_analysis():
         http.send(str(tweetsF))
         http.close()
         '''
-
+        url_senti = urllib.urlopen("http://127.0.0.1:8082/api/v1/sentimentAnalysis?t=" + str(tweetsC))
         #urllib.urlopen("http://127.0.0.1:8082/api/v1/sentimentAnalysis?t=" + str(tweetsF))
+        json_senti = url_senti.read()
+        # Se convierte en un JSON la respuesta leída
+        sentiment = json.loads(json_senti)
 
         # Se lee la respuesta de OMDB
         json_omdb = url_omdb.read()
         # Se convierte en un JSON la respuesta leída
         omdb = json.loads(json_omdb)
         # Se llena el JSON que se enviará a la interfaz gráfica para mostrársela al usuario
-        json_result = {'omdb': omdb}
+        json_result = {'omdb': omdb, 'sentiment':sentiment}
         # Se regresa el template de la interfaz gráfica predefinido así como los datos que deberá cargar
         return render_template("status.html", result=json_result)
     else:
@@ -106,3 +118,4 @@ if __name__ == '__main__':
     app.debug = True
     # Se ejecuta el GUI con un host definido cómo '0.0.0.0' para que pueda ser accedido desde cualquier IP
     app.run(host='0.0.0.0', port=port)
+
