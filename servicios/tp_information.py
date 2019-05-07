@@ -3,8 +3,9 @@
 # ----------------------------------------------------------------------------------------------------------------
 # Archivo: tp_information.py
 # Tarea: 2 Arquitecturas Micro Servicios.
-# Autor(es): Perla Velasco & Yonathan Mtz.
-# Version: 1.3 Octubre 2017
+# Autor(es): Jorge Alfonso Solís Galván, Raúl Bermúdez Robles,
+#            Luis Enrique Ortíz Ramírez & Luis Francisco Alcalá Ramírez.
+# Version: 1.0 Mayo 2019
 # Descripción:
 #
 #   Este archivo define el rol de un servicio. Su función general es porporcionar en un objeto JSON
@@ -13,20 +14,20 @@
 #
 #
 #
-#                                        sv_information.py
+#                                        tp_information.py
 #           +-----------------------+---------------------------+----------------------------+
 #           |  Nombre del elemento  |     Responsabilidad       |         Propiedades        |
 #           +-----------------------+---------------------------+----------------------------+
 #           |                       |  - Recibir una lista de   | - Utiliza el API de        |
 #           |    Procesador de      |    comentarios.           |   analisis de sentimientos |
-#           |    Procesador de      |    comentarios.           |   Text-Processing.         |
-#           |    sentimientos       |  - Proveer de un JSON     |                            |
+#           |    sentimientos       |    comentarios.           |   Text-Processing.         |
+#           |    de texto.          |  - Proveer de un JSON     |                            |
 #           |                       |    con el analisis de     |                            |
-#           |                       |    resultados desde       |                            |
+#           |                       |    sentimientos desde     |                            |
 #           |                       |    la API TextProcessing. |                            |
 #           +-----------------------+---------------------------+----------------------------+
 #
-#	Ejemplo de uso: Abrir navegador e ingresar a http://localhost:8084/api/v1/information?t=matrix
+#	Ejemplo de uso: Abrir navegador e ingresar a http://localhost:8082/api/v1/sentimentAnalysis?tweets={text:"Bad Serie"}
 #
 
 import unirest
@@ -37,37 +38,30 @@ import urllib, json, StringIO, pickle
 
 app = Flask(__name__)
 
-
 class TextProcessingClient(object):
-    ''' 
-    Generic Twitter Class for sentiment analysis. 
-    '''
 
     def __init__(self):
-        ''' 
-        Class constructor or initialization method. 
         '''
-        # keys and tokens from the Twitter Dev Console
+        Constructor de la clase
+        '''
 
     def analizar_tweet(self, texto):
         response = unirest.post("https://japerk-text-processing.p.rapidapi.com/sentiment/", headers={
             "X-RapidAPI-Host": "japerk-text-processing.p.rapidapi.com",
             "X-RapidAPI-Key": "0e652fba64msh27159e87470ff74p17f883jsn28d9111704f1",
             "Content-Type": "application/x-www-form-urlencoded"
-        },
-                                params={
-                                    "text": texto
-                                }
-                                )
+            },
+            params={
+                "text": texto
+            }
+        )
         return response
 
     def analisis_sentimientos(self, tweets):
         pos, neutral, neg = 0, 0, 0
         for tweet in tweets:
             if len(tweet) > 1:
-                print ('tweet ', tweet)
                 result = self.analizar_tweet(tweet)
-
                 output = StringIO.StringIO()
                 f = open("output", "wb")
                 pickle.dump(result, f)
@@ -79,7 +73,6 @@ class TextProcessingClient(object):
 
                 feeling = resultado.body['label']
 
-                print('feel:', feeling.encode())
                 if feeling.encode() == 'pos':
                     pos += 1
                 if feeling.encode() == 'neutral':
@@ -87,28 +80,24 @@ class TextProcessingClient(object):
                 if feeling.encode() == 'neg':
                     neg += 1
 
-        print("positivo:", pos)
-        print("neutral:", neutral)
-        print("negativo:", neg)
-
         res = {'positive': pos, 'neutral': neutral, 'negative': neg, 'total': pos+neg+neutral}
         return res
 
-
 @app.route("/api/v1/sentimentAnalysis")
 def main():
-    # creating object of TwitterClient Class
+    # Creación del objeto TextProccesingClient
     api = TextProcessingClient()
-    # calling function to get tweets
+    # Obtención de los argumentos
     tweets = request.args.get("tweets")
-
     tt = tweets.encode().replace('[', '')
     t1 = tt.split(';')
     return json.dumps(api.analisis_sentimientos(t1)), 200
 
 
 if __name__ == "__main__":
+    # Se define el puerto del sistema operativo que utilizará el servicio
     port = int(os.environ.get('PORT', 8082))
+    # Se habilita la opción de 'debug' para visualizar los errores
     app.debug = True
-    app.run(host='0.0.0.0', port=port) 
-
+    # Se ejecuta el servicio definiendo el host '0.0.0.0' para que se pueda acceder desde cualquier IP
+    app.run(host='0.0.0.0', port=port)
