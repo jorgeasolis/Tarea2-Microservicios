@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
 # !/usr/bin/env python
 # ----------------------------------------------------------------------------------------------------------------
-# Archivo: sv_information.py
+# Archivo: tp_information.py
 # Tarea: 2 Arquitecturas Micro Servicios.
 # Autor(es): Perla Velasco & Yonathan Mtz.
 # Version: 1.3 Octubre 2017
 # Descripción:
 #
 #   Este archivo define el rol de un servicio. Su función general es porporcionar en un objeto JSON
-#   información detallada acerca de una pelicula o una serie en particular haciendo uso del API proporcionada
-#   por IMDb ('https://www.imdb.com/').
+#   información detallada acerca de un analisis de sentimientos en comentarios de usuarios a traves
+#   del uso del API proporcionada por text-processing (http://text-processing.com/).
 #
 #
 #
