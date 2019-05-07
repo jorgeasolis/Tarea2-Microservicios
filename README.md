@@ -17,12 +17,12 @@ tweepy  | 3.7.0   | Libreria de Python que nos permite acceder a la API de Twitt
 
 *__Nota__: También puedes instalar éstos prerrequisitos manualmente ejecutando los siguientes comandos*   
 > sudo pip install Flask==0.10.1  
-> sudo pip install requests==2.12.4
-> sudo pip install Unirest==1.1.7
+> sudo pip install requests==2.12.4  
+> sudo pip install Unirest==1.1.7  
 > sudo pip install tweepy==3.7.0
 
 
-Una vez instalados los prerrequisitos es momento de ejcutar el sistema siguiendo los siguientes pasos:  
+Una vez instalados los prerrequisitos es momento de ejecutar el sistema siguiendo los siguientes pasos:  
 1. Ejecutar el servicio:  
    > python micro_servicios/sv_information.py
 1. Ejecutar el servicio:  
