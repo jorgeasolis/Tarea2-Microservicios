@@ -1,3 +1,34 @@
+# -*- coding: utf-8 -*-
+# !/usr/bin/env python
+# ----------------------------------------------------------------------------------------------------------------
+# Archivo: tp_information.py
+# Tarea: 2 Arquitecturas Micro Servicios.
+# Autor(es): Perla Velasco & Yonathan Mtz.
+# Version: 1.3 Octubre 2017
+# Descripción:
+#
+#   Este archivo define el rol de un servicio. Su función general es porporcionar en un objeto JSON
+#   información detallada acerca de un analisis de sentimientos en comentarios de usuarios a traves
+#   del uso del API proporcionada por text-processing (http://text-processing.com/).
+#
+#
+#
+#                                        sv_information.py
+#           +-----------------------+---------------------------+----------------------------+
+#           |  Nombre del elemento  |     Responsabilidad       |         Propiedades        |
+#           +-----------------------+---------------------------+----------------------------+
+#           |                       |  - Recibir una lista de   | - Utiliza el API de        |
+#           |    Procesador de      |    comentarios.           |   analisis de sentimientos |
+#           |    Procesador de      |    comentarios.           |   Text-Processing.         |
+#           |    sentimientos       |  - Proveer de un JSON     |                            |
+#           |                       |    con el analisis de     |                            |
+#           |                       |    resultados desde       |                            |
+#           |                       |    la API TextProcessing. |                            |
+#           +-----------------------+---------------------------+----------------------------+
+#
+#	Ejemplo de uso: Abrir navegador e ingresar a http://localhost:8084/api/v1/information?t=matrix
+#
+
 import unirest
 
 import os
@@ -29,7 +60,6 @@ class TextProcessingClient(object):
                                 }
                                 )
         return response
-        # print(response.body)
 
     def analisis_sentimientos(self, tweets):
         pos, neutral, neg = 0, 0, 0
@@ -49,8 +79,6 @@ class TextProcessingClient(object):
 
                 feeling = resultado.body['label']
 
-                # feeling = json.dumps(result)['label']
-
                 print('feel:', feeling.encode())
                 if feeling.encode() == 'pos':
                     pos += 1
@@ -64,7 +92,6 @@ class TextProcessingClient(object):
         print("negativo:", neg)
 
         res = {'positive': pos, 'neutral': neutral, 'negative': neg, 'total': pos+neg+neutral}
-        #res = [pos, neutral, neg, pos + neutral + neg]
         return res
 
 
@@ -73,26 +100,10 @@ def main():
     # creating object of TwitterClient Class
     api = TextProcessingClient()
     # calling function to get tweets
-    # tweets = []
     tweets = request.args.get("tweets")
-    # print ('len ts', len(tweets))
-    # print ('tweets ', tweets)
-    # print('Hoooooola')
-
-    # tweets = [request.data]
 
     tt = tweets.encode().replace('[', '')
-
-    t1 = []
     t1 = tt.split(';')
-    # print ('len ', len(t1))
-    '''
-    print ('len ', len(tweets.encode()))
-    print ('ttttt   ', type(tweets.encode()))
-    print ('ooo   ', tweets.encode())
-    '''
-
-    # return api.analisis_sentimientos(tweets)
     return json.dumps(api.analisis_sentimientos(t1)), 200
 
 
