@@ -90,15 +90,30 @@
         <div class="row">
             <div class="col-lg-12 text-center">
                 <h2>Sentiment Analysis</h2>
-                <p class="lead">
-                    <h3><strong>Positive: </strong>  {{ result.sentiment['positive'] }} / {{ result.sentiment['total'] }}</h3>
-                </p>
-                <p class="lead">
-                    <h3><strong>Neutral: </strong>  {{ result.sentiment['neutral'] }} / {{ result.sentiment['total'] }}</h3>
-                </p>
-                <p class="lead">
-                    <h3><strong>Negative: </strong> {{ result.sentiment['negative'] }} / {{ result.sentiment['total'] }} </h3>
-                </p>
+                <div class="container">
+                    <div class="row">
+                        <p class="lead">
+                            <h3><strong>Positive: </strong>  {{ result.sentiment['positive'] }} / {{ result.sentiment['total'] }}</h3>
+                        </p>
+                        <img width="60px" height="63px" src="../static/img/happy.png">
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <p class="lead">
+                            <h3><strong>Neutral: </strong>  {{ result.sentiment['neutral'] }} / {{ result.sentiment['total'] }}</h3>
+                        </p>
+                        <img width="60px" height="63px" src="../static/img/neutral.png">
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <p class="lead">
+                            <h3><strong>Negative: </strong> {{ result.sentiment['negative'] }} / {{ result.sentiment['total'] }} </h3>
+                        </p>
+                        <img width="60px" height="63px" src="../static/img/sad.png">
+                    </div>
+                </div>
             </div>
         </div>
         <!-- /.row -->
@@ -151,6 +166,43 @@
                         </div>
                     </div>
                 </div>
+
+                <h4>Services Used</h4>
+                <hr class="small">
+                <div class="row">
+                    <div class="col-md-12 col-sm-3">
+                        <div class="service-item">
+                                <span class="fa-stack fa-4x">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-ticket fa-stack-1x text-primary"></i>
+                            </span>
+                            <h4>
+                                <strong>Twitter API</strong>
+                            </h4>
+                            <p>Provides tweets of a movie or serie.</p>
+                            <a href="https://developer.twitter.com/" class="btn btn-light">Go site!!!</a>
+                        </div>
+                    </div>
+                </div>
+
+                <h4>Services Used</h4>
+                <hr class="small">
+                <div class="row">
+                    <div class="col-md-12 col-sm-3">
+                        <div class="service-item">
+                                <span class="fa-stack fa-4x">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-ticket fa-stack-1x text-primary"></i>
+                            </span>
+                            <h4>
+                                <strong>Text-Processing API</strong>
+                            </h4>
+                            <p>Provides the Sentiment Analysis.</p>
+                            <a href="https://text-processing.com/docs/" class="btn btn-light">Go site!!!</a>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- /.row (nested) -->
             </div>
             <!-- /.col-lg-10 -->
