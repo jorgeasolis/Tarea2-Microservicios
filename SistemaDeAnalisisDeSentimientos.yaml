@@ -1,0 +1,178 @@
+swagger: "2.0"
+info:
+  description: "This is a system that allows you to analyze the feeling of tweets about a movie or series, in addition, you get additional information about it."
+  version: "1.0.0"
+  title: "Sistema de Análisis de Sentimientos"
+host: "127.0.0.1:8000"
+basePath: "/api/v1"
+schemes:
+- "http"
+
+
+paths:
+  /information:
+    get:
+      tags:
+      - "movie-series"
+      summary: "Find information about a Movie or a Serie"
+      operationId: "findMovie"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "t"
+        in: "query"
+        description: "Name of a Movie or a Serie that is needed for search it"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Movie"
+        400:
+          description: "Invalid name"
+  
+  /tweets:
+    get:
+      tags:
+      - "tweets"
+      summary: "Find most recently tweets about a Movie"
+      operationId: "findTweets"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "title"
+        in: "query"
+        description: "Name of a Movie or a Serie that is needed for search the tweets"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Tweet"
+        400:
+          description: "Invalid name"
+          
+  /sentimentAnalysis:
+    get:
+      tags:
+      - "sentiments"
+      summary: "Evaluate the feelings of the tweets"
+      operationId: "findSentiments"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "tweets"
+        in: "query"
+        description: "Tweets that will be evaluated"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Sentiments"
+        400:
+          description: "Invalid string"
+  
+  
+definitions:
+  Movie:
+    type: "object"
+    properties:
+      Ratings:
+        type: "array"
+        items:
+          $ref: "#/definitions/Ratings"
+      Rated:
+        type: "string"
+      Plot:
+        type: "string"
+      DVD:
+        type: "string"
+      Writer:
+        type: "string"
+      Production:
+        type: "string"
+      Actors:
+        type: "string"
+      Type:
+        type: "string"
+      ImdbVotes:
+        type: "string"
+      Website:
+        type: "string"
+      Poster:
+        type: "string"
+      Title:
+        type: "string"
+      Released:
+        type: "string"
+      Awards:
+        type: "string"
+      Genre:
+        type: "string"
+      ImdbRating:
+        type: "number"
+      Language:
+        type: "string"
+      Country:
+        type: "string"
+      BoxOffice:
+        type: "string"
+      Runtime:
+        type: "string"
+      ImdbID:
+        type: "string"
+      Metascore:
+        type: "integer"
+      Response:
+        type: "boolean"
+      Year:
+        type: "integer"
+    xml:
+      name: "Movie"
+      
+  Ratings:
+    type: "object"
+    properties:
+      source:
+        type: "string"
+      value:
+        type: "string"
+        
+  Tweet:
+    type: "object"
+    properties:
+      text:
+        type: "string"
+        
+  Sentiments:
+    type: "object"
+    properties:
+      positive:
+        type: "integer"
+      negative:
+        type: "integer"
+      neutral:
+        type: "integer"
+      total:
+        type: "integer"
+        
+  ApiResponse:
+    type: "object"
+    properties:
+      code:
+        type: "integer"
+        format: "int32"
+      type:
+        type: "string"
+      message:
+        type: "string"

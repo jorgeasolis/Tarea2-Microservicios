@@ -1,30 +1,31 @@
 # -*- coding: utf-8 -*-
 # !/usr/bin/env python
 # ----------------------------------------------------------------------------------------------------------------
-# Archivo: sv_information.py
+# Archivo: tw_information.py
 # Tarea: 2 Arquitecturas Micro Servicios.
-# Autor(es): Perla Velasco & Yonathan Mtz.
-# Version: 1.3 Octubre 2017
+# Autor(es): Jorge Alfonso Solís Galván, Raúl Bermúdez Robles,
+#            Luis Enrique Ortíz Ramírez & Luis Francisco Alcalá Ramírez.
+# Version: 1.0 Mayo 2019
 # Descripción:
 #
-#   Este archivo define el rol de un servicio. Su función general es porporcionar en un objeto JSON
-#   información detallada acerca de una pelicula o una serie en particular haciendo uso del API proporcionada
-#   por IMDb ('https://www.imdb.com/').
+#   Este archivo define el rol de un servicio. Su función general es porporcionar en una lista
+#   los tweets relacionados a alguna película o serie que se le indique.
 #
 #
 #
-#                                        sv_information.py
+#                                        tw_information.py
 #           +-----------------------+-------------------------+------------------------+
 #           |  Nombre del elemento  |     Responsabilidad     |      Propiedades       |
 #           +-----------------------+-------------------------+------------------------+
-#           |                       |  - Ofrecer un JSON que  | - Utiliza el API de    |
-#           |    Procesador de      |    contenga información |   IMDb.                |
-#           |     comentarios       |    detallada de pelí-   | - Devuelve un JSON con |
-#           |       de IMDb         |    culas o series en    |   datos de la serie o  |
-#           |                       |    particular.          |   pelicula en cuestión.|
+#           |                       |  - Ofrecer una lista    | - Utiliza el API de    |
+#           |    Procesador de      |    que contiene los     |   Twitter.             |
+#           |   tweets de Twitter   |    tweets obtenidos     | - Devuelve una lista   |
+#           |                       |    de la consulta a la  |   con los tweets rela- |
+#           |                       |    API de Twitter.      |   cionados con la      |
+#           |                       |                         |   película consultada. |
 #           +-----------------------+-------------------------+------------------------+
 #
-#	Ejemplo de uso: Abrir navegador e ingresar a http://localhost:8084/api/v1/information?t=matrix
+#	Ejemplo de uso: Abrir navegador e ingresar a http://localhost:8083/api/v1/tweets?title=matrix
 #
 
 import re 
@@ -33,72 +34,61 @@ from tweepy import OAuthHandler
 
 import os
 from flask import Flask, abort, render_template, request
-import urllib, json
+import json
 
 app = Flask(__name__)
 
 
 @app.route("/api/v1/tweets")
 def get_tweets():
-    # keys and tokens from the Twitter Dev Console
+    # Llaves para acceder a la API de Twitter
     consumer_key = 'Y0zvODDHvri9l52c3mQ3RwgZw'
     consumer_secret = 'TFqMqv1oXMFAnJ8mNRxntLktUfOlhNFGhzp1qZuladORJckasP'
     access_token = '2354059560-d45ZqnMCKogB9tcPcIfT2joxaxNg4r660akwRpj'
     access_token_secret = 'Ib6l84atlADRPOBn9iTitxPeF0tejuH1h4KHO9KO41DFo'
 
-    # attempt authentication
+    # Autentificación
     try:
-        # create OAuthHandler object
+        # Creación del objeto OAuthHandler
         auth = OAuthHandler(consumer_key, consumer_secret)
-        # set access token and secret
+        # Asignar el access_token y access_token_secret
         auth.set_access_token(access_token, access_token_secret)
-        # create tweepy API object to fetch tweets
+        # Creación de objeto tweepy API
         api = tweepy.API(auth)
     except:
         print("Error: Authentication Failed")
 
+    # Obtención de los argumentos (Título de la película)
     title = request.args.get("title")
     tweets = []
 
+    # Creación de la query para la obtención de los Tweets
     query = {'q': title,
              'result_type': 'recent',
-             'count': 200,
+             'count': 100,
+             'lang': 'en'
              }
 
     try:
-        # call twitter api to fetch tweets
-        #fetched_tweets = api.search(q=title, c=20)
+        # Llamada a la API de Twitter
         fetched_tweets = api.search(**query)
 
-        print (type(fetched_tweets))
-        print ('len fetched ', len(fetched_tweets))
-
-        # parsing tweets one by one
+        # Parseo de tweets
         for tweet in fetched_tweets:
-            # empty dictionary to store required params of a tweet
             parsed_tweet = {}
 
-            # saving text of tweet
-            #parsed_tweet['text'] = tweet.text
+            # Almacenando el texto del tweet
             parsed_tweet['text'] = ' '.join(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t]) | (\w +:\ / \ / \S +)", " ", tweet.text).split())
 
-            # appending parsed tweet to tweets list
-            '''
+            # Agregando los tweets parseados a la lista
             if tweet.retweet_count > 0:
-                # if tweet has retweets, ensure that it is appended only once
                 if parsed_tweet not in tweets:
                     tweets.append(parsed_tweet)
             else:
                 tweets.append(parsed_tweet)
-            '''
-            tweets.append(parsed_tweet)
-        print ('len tweets ', len(tweets))
 
     except tweepy.TweepError as e:
-        # print error (if any)
         print("Error : " + str(e))
-
-    print('Hola',json.dumps(tweets))
 
     return json.dumps(tweets), 200
 
